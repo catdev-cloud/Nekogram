@@ -3510,6 +3510,14 @@ public class PeerStoriesView extends SizeNotifierFrameLayout implements Notifica
             }
 
             @Override
+            public void setFrontface(boolean frontface) {
+                checkInstantCameraView();
+                if (instantCameraView != null) {
+                    instantCameraView.setFrontface(frontface);
+                }
+            }
+
+            @Override
             public void toggleVideoRecordingPause() {
                 if (instantCameraView != null) {
                     instantCameraView.togglePause();

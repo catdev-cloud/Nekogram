@@ -702,6 +702,10 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
         return !recording;
     }
 
+    public void setFrontface(boolean frontface) {
+        isFrontface = frontface;
+    }
+
     public void showCamera(boolean fromPaused) {
         if (textureView != null) {
             return;
@@ -732,9 +736,6 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
         cameraReady = false;
         selectedCamera = null;
         if (!fromPaused) {
-            if (!useCamera2) {
-                isFrontface = !NekoConfig.rearVideoMessages;
-            }
             updateFlash();
             recordedTime = 0;
             progress = 0;

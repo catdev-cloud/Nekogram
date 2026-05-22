@@ -314,6 +314,9 @@ public class ChatActivityEnterView extends FrameLayout implements
 
         void needStartRecordVideo(int state, boolean notify, int scheduleDate, int scheduleRepeatPeriod, int ttl, long effectId, long stars);
 
+        default void setFrontface(boolean frontface) {
+        }
+
         void toggleVideoRecordingPause();
 
         boolean isVideoRecordingPaused();
@@ -864,10 +867,41 @@ public class ChatActivityEnterView extends FrameLayout implements
         @Override
         public void run() {
             if (delegate != null) {
+                if (NekoConfig.cameraInVideoMessages == NekoConfig.CAMERA_ASK) {
+                    ItemOptions.makeOptions(parentFragment, audioVideoButtonContainer)
+                            .add(R.drawable.msg_openprofile, LocaleController.getString(R.string.FrontCamera), () -> openCamera(true))
+                            .add(R.drawable.msg_background, LocaleController.getString(R.string.RearCamera), () -> openCamera(false))
+                            .setMinWidth(dp(196))
+                            .setDimAlpha(0)
+                            .forceTop(true)
+                            .show();
+                    try {
+                        performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, 0);
+                    } catch (Exception ignored) {
+                    }
+                    return;
+                }
+                delegate.setFrontface(NekoConfig.cameraInVideoMessages == NekoConfig.CAMERA_FRONT);
                 delegate.needStartRecordVideo(0, true, 0, 0, 0, 0, 0);
             }
         }
     };
+
+    private void openCamera(boolean frontface) {
+        delegate.setFrontface(frontface);
+        delegate.needStartRecordVideo(0, true, 0, 0, 0, 0, 0);
+        if (!recordingAudioVideo) {
+            recordingAudioVideo = true;
+            updateRecordInterface(RECORD_STATE_ENTER, true);
+            if (recordCircle != null) {
+                recordCircle.showWaves(false, false);
+                recordCircle.setLockTranslation(6356.0f);
+            }
+            if (recordTimerView != null) {
+                recordTimerView.reset();
+            }
+        }
+    }
 
     private boolean recordAudioVideoRunnableStarted;
     private boolean calledRecordRunnable;
@@ -909,7 +943,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                 } else {
                     onFinishInitCameraRunnable.run();
                 }
-                if (!recordingAudioVideo) {
+                if (!recordingAudioVideo && NekoConfig.cameraInVideoMessages != NekoConfig.CAMERA_ASK) {
                     recordingAudioVideo = true;
                     updateRecordInterface(RECORD_STATE_ENTER, true);
                     if (recordCircle != null) {
@@ -2081,6 +2115,20 @@ public class ChatActivityEnterView extends FrameLayout implements
         }
 
         public int setLockTranslation(float value) {
+            if (value == 6356.0f) {
+                sendButtonVisible = true;
+                lockAnimatedTranslation = 1.0f;
+                startTranslation = 1.0f;
+                invalidate();
+                snapAnimationProgress = 1.0f;
+                progressToSendButton = 1.0f;
+                if (slideText != null) {
+                    slideText.setCancelToProgress(1.0f);
+                }
+                slideToCancelProgress = 1.0f;
+                slideToCancelLockProgress = 1.0f;
+                return 0;
+            }
             if (sendButtonVisible) {
                 return 2;
             }
