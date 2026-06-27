@@ -2,6 +2,7 @@ import com.android.build.api.variant.FilterConfiguration
 
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
     id 'io.sentry.android.gradle'
 }
 
