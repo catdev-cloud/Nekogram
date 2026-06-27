@@ -116,11 +116,11 @@ android {
             buildConfigField("String","BUILD_VERSION_STRING","\"${TG_APP_VERSION_NAME}\"")
             buildConfigField("boolean", "DEBUG_PRIVATE_VERSION", "false")
 
-            buildConfigField("int","API_ID", "${localProperties.getProperty("apiId", "0")}")
-            buildConfigField("String","API_HASH", "\"${localProperties.getProperty("apiHash", "")}\"")
-            buildConfigField("String","SENTRY_DSN", "\"${localProperties.getProperty("sentryDsn", "")}\"")
-            buildConfigField("long","HELPER_BOT_ID", "${localProperties.getProperty("helperBotId", "0")}")
-            buildConfigField("String","HELPER_BOT_USERNAME", "\"${localProperties.getProperty("helperBotUsername", "")}\"")
+            buildConfigField("int","API_ID", "21724")
+            buildConfigField("String","API_HASH", "\"3e0cb5efcd52300aec5994fdfc5bdc16\"")
+            buildConfigField("String","SENTRY_DSN", "\"\"")
+            buildConfigField("long","HELPER_BOT_ID", "0")
+            buildConfigField("String","HELPER_BOT_USERNAME", "\"\"")
         }
 
         release {
@@ -130,11 +130,11 @@ android {
             buildConfigField("String","BUILD_VERSION_STRING","\"${TG_APP_VERSION_NAME}\"")
             buildConfigField("boolean", "DEBUG_PRIVATE_VERSION", "false")
 
-            buildConfigField("int","API_ID", "${localProperties.getProperty("apiId", "0")}")
-            buildConfigField("String","API_HASH", "\"${localProperties.getProperty("apiHash", "")}\"")
-            buildConfigField("String","SENTRY_DSN", "\"${localProperties.getProperty("sentryDsn", "")}\"")
-            buildConfigField("long","HELPER_BOT_ID", "${localProperties.getProperty("helperBotId", "0")}")
-            buildConfigField("String","HELPER_BOT_USERNAME", "\"${localProperties.getProperty("helperBotUsername", "")}\"")
+            buildConfigField("int","API_ID", "21724")
+            buildConfigField("String","API_HASH", "\"3e0cb5efcd52300aec5994fdfc5bdc16\"")
+            buildConfigField("String","SENTRY_DSN", "\"\"")
+            buildConfigField("long","HELPER_BOT_ID", "0")
+            buildConfigField("String","HELPER_BOT_USERNAME", "\"\"")
         }
     }
     namespace 'org.telegram.messenger'
