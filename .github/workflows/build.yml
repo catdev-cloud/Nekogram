@@ -75,6 +75,7 @@ jobs:
 
       - name: Build with Gradle
         run: |
+          chmod +xrw gradlew
           ./gradlew assembleDebug
           ./gradlew bundlePlay
           ./gradlew sentryUploadSourceBundlePlay
