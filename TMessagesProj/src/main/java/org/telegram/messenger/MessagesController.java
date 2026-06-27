@@ -18244,6 +18244,7 @@ public class MessagesController extends BaseController implements NotificationCe
                     deletedMessages.put(0, arrayList);
                 }
                 arrayList.addAll(update.messages);
+                tw.nekomimi.nekogram.ayu.AyuMessagesController.onMessagesDeleted(currentAccount, 0, update.messages);
             } else if (baseUpdate instanceof TL_update.TL_updateDeleteQuickReplyMessages) {
                 TL_update.TL_updateDeleteQuickReplyMessages update = (TL_update.TL_updateDeleteQuickReplyMessages) baseUpdate;
                 if (deletedQuickReplyMessages == null) {
@@ -18770,6 +18771,7 @@ public class MessagesController extends BaseController implements NotificationCe
                     deletedMessages.put(dialogId, arrayList);
                 }
                 arrayList.addAll(update.messages);
+                tw.nekomimi.nekogram.ayu.AyuMessagesController.onMessagesDeleted(currentAccount, update.channel_id, update.messages);
             } else if (baseUpdate instanceof TL_update.TL_updateChannel) {
                 if (BuildVars.LOGS_ENABLED) {
                     TL_update.TL_updateChannel update = (TL_update.TL_updateChannel) baseUpdate;

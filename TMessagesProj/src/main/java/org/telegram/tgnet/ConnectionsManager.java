@@ -369,6 +369,20 @@ public class ConnectionsManager extends BaseController {
         if (BuildVars.LOGS_ENABLED) {
             FileLog.d("send request " + object + " with token = " + requestToken);
         }
+        if (tw.nekomimi.nekogram.ayu.AyuGhost.shouldDropTyping(object)) {
+            return;
+        }
+        if (tw.nekomimi.nekogram.ayu.AyuGhost.shouldDropRead(object)) {
+            if (onComplete != null) {
+                try {
+                    onComplete.run(tw.nekomimi.nekogram.ayu.AyuGhost.buildFakeReadResponse(), null);
+                } catch (Exception ghostException) {
+                    FileLog.e(ghostException);
+                }
+            }
+            return;
+        }
+        tw.nekomimi.nekogram.ayu.AyuGhost.adjustOnline(object);
         try {
             NativeByteBuffer buffer = new NativeByteBuffer(object.getObjectSize());
             object.serializeToStream(buffer);
